@@ -10,7 +10,7 @@ The hub for mdbook.
 
 `mdbook-hub` aimed to bring the best publishing, and hosting experience to `mdbook` users. Imagine, we run `mdbook publish` in the directory of *The Rust Programming Language Book*, we can publish the book with the unique url `https://mdbook.org/rust-lang/book` effortlessly, no Github Pages setup required, no CI required.
 
-Just like we `cargo publish`, we can publish our crate on crates.io and get a unique url on docs.rs.
+The `mdbook publish` is similar to `cargo publish` which can publish our crate to [crates.io](https://crates.io) and get a unique url on [docs.rs](https://docs.rs).
 
 > mdbook has no `publish` subcommand yet, we need to add it.
 
@@ -35,5 +35,36 @@ Yes, this is like the relationship between a GitHub user and a GitHub repository
 
 ## Technical design
 
-`mdbook-hub` is very similar to the combination of `crates.io` and `docs.rs` technically, except it is for books. 
+Technically, `mdbook-hub` is very similar to the combination of `crates.io` and `docs.rs`, except it is for books. We use `mdbook` to automatically generate HTML pages once a user publishes a new version of his book. The generated static book will be uploaded to AWS S3 or other similar static hosting platforms.
+
+`mdbook-hub` has several critical components:
+
+- Server
+- `mdbook` subcommand 
+
+### Server
+
+`mdbook-hub` is a web server used to handle API requests such as but not limited to user authentication and book publishing.
+
+### Subcommand
+
+We need to add two subcommands to `mdbook`:
+
+- `mdbook login` - Authenticate a user with an API token generated from `mdbook-hub` server. 
+
+- `mdbook publish` - Publish the book to `mdbook-hub` if the user is authenticated.
+
+### Alternative
+
+A `mdbook-hub` cargo subcommand is another good choice if we cannot add above two subcommands to `mdbook`.
+
+```sh
+$ cargo install mdbook-hub
+
+$ cargo mdbook login # alternative to `mdbook login`
+
+$ cargo mdbook publish # alternative to `mdbook publish`
+```
+
+## Roadmap
 
