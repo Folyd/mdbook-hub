@@ -1,3 +1,6 @@
-fn main() {
-    println!("Hello, world!");
+#[tokio::main]
+async fn main() {
+    tracing_subscriber::fmt::init();
+
+    println!("Hello, mdbook-hub!");
 }

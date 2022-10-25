@@ -68,3 +68,7 @@ $ cargo mdbook publish # alternative to `mdbook publish`
 
 ## Roadmap
 
+- Support login with API token
+- Support publish book
+- Support book i18n
+- Book page view statistics
